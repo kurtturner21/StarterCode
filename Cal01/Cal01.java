@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Created by turner on 9/11/2017.
+ * Note that this code has errors and students are to review this code and fix the errors.
+ * Yes this code is public and is mostly for first time Java Programmers. 
  */
 
 // this class allows for many methods given two numbers 
