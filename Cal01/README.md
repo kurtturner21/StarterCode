@@ -1,7 +1,7 @@
 ### The Objective
-The objective of this to expose the student to debugging code, feature requests, markdown documents and pull requests.  
+The objective of this project is to expose the student aspects of code review such as debugging code, feature requests, markdown documents and pull requests.  
 
-Complete the tasks below to get full credit for this project
+Complete the tasks below to earn full credit for this project
 
 For a guide on markdown use this [resource](http://commonmark.org/help/).
 
