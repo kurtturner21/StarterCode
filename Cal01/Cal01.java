@@ -22,29 +22,39 @@ class DoSomeMath{
         System.out.println("Okay, let's add... " + FirstNum + " + " + SecondNum + " = " + (FirstNum + SecondNum));
 		return;
     }
+	
     void Subtract(String strFNum, String strSNum){
         Double FirstNum = Double.parseDouble(strFNum);
         Double SecondNum = Double.parseDouble(strSNum);
         System.out.println("Okay, let's subtract... " + FirstNum + " - " + SecondNum + " = " + (FirstNum - SecondNum));
 		return;
     }
+	
     void Multiplication(String strFNum, String strSNum){
         Double FirstNum = Double.parseDouble(strFNum);
         Double SecondNum = Double.parseDouble(strSNum);
         System.out.println("Okay, let's multiply... " + FirstNum + " * " + SecondNum + " = " + (FirstNum * SecondNum));
 		return;
     }
+	
     void Division(String strFNum, String strSNum){
-		if(strSNum == "0") return;		// 7. Prvent the division by zero.
+		if(strSNum.contains("0")){
+			System.out.println("For some reason, I am not allowed to do this opperation.");
+			return;		// 7. Prvent the division by zero.
+		}
         Double FirstNum = Double.parseDouble(strFNum);
         Double SecondNum = Double.parseDouble(strSNum);
         System.out.println("Okay, let's divide... " + FirstNum + " / " + SecondNum + " = " + (FirstNum / SecondNum));
 		return;
     }
+	
     void PowerOf(String strFNum, String strSNum){
 		// 8. Add custom function to the DoSomeMath class of your choosing. 
         Double FirstNum = Double.parseDouble(strFNum);
         Double SecondNum = Double.parseDouble(strSNum);
+		
+		// this site was helpful
+		// https://stackoverflow.com/questions/19734408/how-to-find-power-of-power-of-a-number-like-2109-in-java
         System.out.println("let's find the power... " + FirstNum + " raised to " + SecondNum + " = " + Math.pow(FirstNum, SecondNum));
 		return;
     }
