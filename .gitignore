@@ -1,2 +1,5 @@
 
 *.class
+SqlLite/sqlite-jdbc-3.20.0.jar
+SqlLite/sqlite3.exe
+SqlLite/Users.db
