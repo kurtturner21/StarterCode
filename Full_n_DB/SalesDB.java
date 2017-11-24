@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 /*
 This code is helpful to learn how to create JAVA code around SQLite
@@ -19,7 +20,7 @@ public class SalesDB {
 	// connecting to the data base file 
 	public void connectDB(){
 		try {
-			Class.forName("org.sqlite.JDBC");
+			// Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:Users.db");
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -82,6 +83,66 @@ public class SalesDB {
 		// UDB.addDataToPeopleTable("Sandy", 25, "400 North Lee Hwy", "Cleveland", "TN", "37317", 16700.12);
 		// UDB.addDataToPeopleTable("April", 49, "10 You Know It Drive", "Greensboro", "NC", "27012", 82000.00);
 		}
+	}
+
+
+	// returns a count of rows in customer table
+	public int getCustomerCount(){
+		Statement stmt = null;
+		int CustomerCount = 0;
+		try {
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery( "select count(*) as rowct from customers;" );
+			CustomerCount = rs.getInt("rowct");				
+			rs.close();
+			stmt.close();
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+		return CustomerCount;
+	}
+	
+	// get a list of all customer ids to store into memory
+	public ArrayList<Integer> getCustomerIds(){
+		Statement stmt = null;
+		ArrayList<Integer> CustomerIds = new ArrayList<Integer>();
+		try {
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery( "select id from customers order by id asc;" );
+			while ( rs.next() ){
+				CustomerIds.add(rs.getInt("id"));
+			}
+			rs.close();
+			stmt.close();
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+		return CustomerIds;		
+	}
+	
+	// pull one customer data row
+	public String[] getCustomerRecord(int neededCustomerId){
+		Statement stmt = null;
+		String[] CustomerData = {null, null, null, null, null, null};
+		try {
+			stmt = c.createStatement();
+			ResultSet rs  = stmt.executeQuery( "select * from customers where id = " + neededCustomerId + ";" );
+			CustomerData[0] = rs.getString("name");
+			CustomerData[1] = rs.getString("address");
+			CustomerData[2] = rs.getString("city");
+			CustomerData[3] = rs.getString("state");
+			CustomerData[4] = rs.getString("zip");
+			CustomerData[5] = rs.getString("phone");
+			rs.close();
+			stmt.close();
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+		return CustomerData;		
+		
 	}
 
 }
