@@ -30,8 +30,7 @@ public class SalesDB {
 	
    
 	public void createTables(){
-		Statement stmt = null;
-		
+		Statement stmt = null;		
 		// Customer Table
 		try {
 			stmt = c.createStatement();
@@ -63,29 +62,51 @@ public class SalesDB {
 	}
 
 	
-	// Adds data to the people table
-	public void addDataToPeopleTable(String Name, int Age, String Address, String City, 
-		String State, String Zip, Double Salery){
+	/* /////////////////////////////////
+	Customer table functions. 
+	 /////////////////////////////////  */
+
+	
+	// Adds data to the Customer table
+	// example:
+		// SDB.addCustomer("Bob", "123 Any St.", "Cleveland", "TN", "37320");
+	public void addCustomer(String Name, String Address, String City, String State, String Zip){
 		Statement stmt = null;
 		try {
 			stmt = c.createStatement();
-			String sql = "insert into people (name, age, address, city, state, zip, salary) " +
-						"values ('" + Name + "'," + Age + ", '" + Address + "', '" + City + 
-						"', '" + State + "', '" + Zip + "', " + Salery + ");"; 
+			String sql = "insert into customers (name, address, city, state, zip) " +
+						"values ('" + Name + "', '" + Address + "', '" + City + 
+						"', '" + State + "', '" + Zip + "');"; 
 			stmt.executeUpdate(sql);
 			stmt.close();
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-			
-			
-		// UDB.addDataToPeopleTable("Bob", 43, "123 Any St.", "Cleveland", "TN", "37320", 43000.25);
-		// UDB.addDataToPeopleTable("Sandy", 25, "400 North Lee Hwy", "Cleveland", "TN", "37317", 16700.12);
-		// UDB.addDataToPeopleTable("April", 49, "10 You Know It Drive", "Greensboro", "NC", "27012", 82000.00);
+
 		}
 	}
+		
+	// Updates data to the Customer table
+	public void updateCustomer(String Name, String Address, String City, String State, String Zip, int whereCustomerId){
+		Statement stmt = null;
+		try {
+			stmt = c.createStatement();
+			String sql = "update customers set \n" +
+						"name = '" + Name + "'\n," +
+						"address = '" + Address + "'\n," +
+						"city = '" + City + "'\n," +
+						"state = '" + State + "'\n," +
+						"zip = '" + Zip + "'\n" +
+						"where id = " + whereCustomerId + ";"; 
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
 
-
+		}
+	}
+		
 	// returns a count of rows in customer table
 	public int getCustomerCount(){
 		Statement stmt = null;
@@ -128,7 +149,7 @@ public class SalesDB {
 		String[] CustomerData = {null, null, null, null, null, null};
 		try {
 			stmt = c.createStatement();
-			ResultSet rs  = stmt.executeQuery( "select * from customers where id = " + neededCustomerId + ";" );
+			ResultSet rs  = stmt.executeQuery("select * from customers where id = " + neededCustomerId + ";");
 			CustomerData[0] = rs.getString("name");
 			CustomerData[1] = rs.getString("address");
 			CustomerData[2] = rs.getString("city");
@@ -141,8 +162,22 @@ public class SalesDB {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
-		return CustomerData;		
-		
+		return CustomerData;				
+	}
+	
+	// pull one customer data row
+	public void deleteCustomerRecord(int neededCustomerId){
+		Statement stmt = null;
+		try {
+	        stmt = c.createStatement();
+			String sql = "DELETE from customers where id = " + neededCustomerId + ";;";
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
 	}
 
+	
 }
